@@ -1,0 +1,365 @@
+{
+  "info": {
+    "name": "Virtual Library API",
+    "description": "Collection para testar a API de biblioteca virtual (CRUD de livros).",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "base_url", "value": "http://127.0.0.1:5000/api" },
+    { "key": "book_id", "value": "1" }
+  ],
+  "item": [
+    {
+      "name": "Cadastrar livro (201)",
+      "response": [
+        {
+          "name": "Livro cadastrado",
+          "originalRequest": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Dom Casmurro\",\n  \"author\": \"Machado de Assis\",\n  \"publication_date\": \"1899-01-01\",\n  \"summary\": \"Bentinho e a dúvida sobre Capitu.\"\n}"
+            },
+            "url": { "raw": "{{base_url}}/books", "host": ["{{base_url}}"], "path": ["books"] }
+          },
+          "status": "Created",
+          "code": 201,
+          "_postman_previewlanguage": "json",
+          "header": [{ "key": "Content-Type", "value": "application/json" }],
+          "body": "{\n  \"id\": 1,\n  \"title\": \"Dom Casmurro\",\n  \"author\": \"Machado de Assis\",\n  \"publication_date\": \"1899-01-01\",\n  \"summary\": \"Bentinho e a dúvida sobre Capitu.\"\n}"
+        }
+      ],
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status 201', () => pm.response.to.have.status(201));",
+              "const body = pm.response.json();",
+              "if (body.id) { pm.collectionVariables.set('book_id', body.id); }"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"title\": \"Dom Casmurro\",\n  \"author\": \"Machado de Assis\",\n  \"publication_date\": \"1899-01-01\",\n  \"summary\": \"Bentinho e a dúvida sobre Capitu.\"\n}",
+          "options": { "raw": { "language": "json" } }
+        },
+        "url": { "raw": "{{base_url}}/books", "host": ["{{base_url}}"], "path": ["books"] }
+      }
+    },
+    {
+      "name": "Listar livros (200)",
+      "response": [
+        {
+          "name": "Lista de livros",
+          "originalRequest": {
+            "method": "GET",
+            "url": { "raw": "{{base_url}}/books", "host": ["{{base_url}}"], "path": ["books"] }
+          },
+          "status": "OK",
+          "code": 200,
+          "_postman_previewlanguage": "json",
+          "header": [{ "key": "Content-Type", "value": "application/json" }],
+          "body": "[\n  {\n    \"id\": 1,\n    \"title\": \"Dom Casmurro\",\n    \"author\": \"Machado de Assis\",\n    \"publication_date\": \"1899-01-01\",\n    \"summary\": \"Bentinho e a dúvida sobre Capitu.\"\n  }\n]"
+        }
+      ],
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": ["pm.test('Status 200', () => pm.response.to.have.status(200));"]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "url": { "raw": "{{base_url}}/books", "host": ["{{base_url}}"], "path": ["books"] }
+      }
+    },
+    {
+      "name": "Buscar por título (200)",
+      "response": [
+        {
+          "name": "Livros encontrados por título",
+          "originalRequest": {
+            "method": "GET",
+            "url": {
+              "raw": "{{base_url}}/books?title=dom",
+              "host": ["{{base_url}}"],
+              "path": ["books"],
+              "query": [{ "key": "title", "value": "dom" }]
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "_postman_previewlanguage": "json",
+          "header": [{ "key": "Content-Type", "value": "application/json" }],
+          "body": "[\n  {\n    \"id\": 1,\n    \"title\": \"Dom Casmurro\",\n    \"author\": \"Machado de Assis\",\n    \"publication_date\": \"1899-01-01\",\n    \"summary\": \"Bentinho e a dúvida sobre Capitu.\"\n  }\n]"
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "{{base_url}}/books?title=dom",
+          "host": ["{{base_url}}"],
+          "path": ["books"],
+          "query": [{ "key": "title", "value": "dom" }]
+        }
+      }
+    },
+    {
+      "name": "Buscar por autor (200)",
+      "response": [
+        {
+          "name": "Livros encontrados por autor",
+          "originalRequest": {
+            "method": "GET",
+            "url": {
+              "raw": "{{base_url}}/books?author=machado",
+              "host": ["{{base_url}}"],
+              "path": ["books"],
+              "query": [{ "key": "author", "value": "machado" }]
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "_postman_previewlanguage": "json",
+          "header": [{ "key": "Content-Type", "value": "application/json" }],
+          "body": "[\n  {\n    \"id\": 1,\n    \"title\": \"Dom Casmurro\",\n    \"author\": \"Machado de Assis\",\n    \"publication_date\": \"1899-01-01\",\n    \"summary\": \"Bentinho e a dúvida sobre Capitu.\"\n  }\n]"
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "{{base_url}}/books?author=machado",
+          "host": ["{{base_url}}"],
+          "path": ["books"],
+          "query": [{ "key": "author", "value": "machado" }]
+        }
+      }
+    },
+    {
+      "name": "Detalhar livro (200/404)",
+      "response": [
+        {
+          "name": "Livro encontrado",
+          "originalRequest": {
+            "method": "GET",
+            "url": { "raw": "{{base_url}}/books/1", "host": ["{{base_url}}"], "path": ["books", "1"] }
+          },
+          "status": "OK",
+          "code": 200,
+          "_postman_previewlanguage": "json",
+          "header": [{ "key": "Content-Type", "value": "application/json" }],
+          "body": "{\n  \"id\": 1,\n  \"title\": \"Dom Casmurro\",\n  \"author\": \"Machado de Assis\",\n  \"publication_date\": \"1899-01-01\",\n  \"summary\": \"Bentinho e a dúvida sobre Capitu.\"\n}"
+        },
+        {
+          "name": "Livro não encontrado",
+          "originalRequest": {
+            "method": "GET",
+            "url": { "raw": "{{base_url}}/books/999", "host": ["{{base_url}}"], "path": ["books", "999"] }
+          },
+          "status": "Not Found",
+          "code": 404,
+          "_postman_previewlanguage": "json",
+          "header": [{ "key": "Content-Type", "value": "application/json" }],
+          "body": "{\n  \"error\": \"Livro não encontrado.\"\n}"
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "{{base_url}}/books/{{book_id}}",
+          "host": ["{{base_url}}"],
+          "path": ["books", "{{book_id}}"]
+        }
+      }
+    },
+    {
+      "name": "Atualizar livro (200/400/404)",
+      "response": [
+        {
+          "name": "Livro atualizado",
+          "originalRequest": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Dom Casmurro (edição revisada)\",\n  \"author\": \"Machado de Assis\",\n  \"publication_date\": \"1899-01-01\",\n  \"summary\": \"Resumo atualizado.\"\n}"
+            },
+            "url": { "raw": "{{base_url}}/books/1", "host": ["{{base_url}}"], "path": ["books", "1"] }
+          },
+          "status": "OK",
+          "code": 200,
+          "_postman_previewlanguage": "json",
+          "header": [{ "key": "Content-Type", "value": "application/json" }],
+          "body": "{\n  \"id\": 1,\n  \"title\": \"Dom Casmurro (edição revisada)\",\n  \"author\": \"Machado de Assis\",\n  \"publication_date\": \"1899-01-01\",\n  \"summary\": \"Resumo atualizado.\"\n}"
+        },
+        {
+          "name": "Dados inválidos",
+          "originalRequest": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"title\": \"Dom Casmurro\"\n}" },
+            "url": { "raw": "{{base_url}}/books/1", "host": ["{{base_url}}"], "path": ["books", "1"] }
+          },
+          "status": "Bad Request",
+          "code": 400,
+          "_postman_previewlanguage": "json",
+          "header": [{ "key": "Content-Type", "value": "application/json" }],
+          "body": "{\n  \"error\": \"Campos obrigatórios ausentes: author, publication_date, summary.\"\n}"
+        },
+        {
+          "name": "Livro não encontrado",
+          "originalRequest": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Dom Casmurro\",\n  \"author\": \"Machado de Assis\",\n  \"publication_date\": \"1899-01-01\",\n  \"summary\": \"Resumo atualizado.\"\n}"
+            },
+            "url": { "raw": "{{base_url}}/books/999", "host": ["{{base_url}}"], "path": ["books", "999"] }
+          },
+          "status": "Not Found",
+          "code": 404,
+          "_postman_previewlanguage": "json",
+          "header": [{ "key": "Content-Type", "value": "application/json" }],
+          "body": "{\n  \"error\": \"Livro não encontrado.\"\n}"
+        }
+      ],
+      "request": {
+        "method": "PUT",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"title\": \"Dom Casmurro (edição revisada)\",\n  \"author\": \"Machado de Assis\",\n  \"publication_date\": \"1899-01-01\",\n  \"summary\": \"Resumo atualizado.\"\n}",
+          "options": { "raw": { "language": "json" } }
+        },
+        "url": {
+          "raw": "{{base_url}}/books/{{book_id}}",
+          "host": ["{{base_url}}"],
+          "path": ["books", "{{book_id}}"]
+        }
+      }
+    },
+    {
+      "name": "Remover livro (204/404)",
+      "response": [
+        {
+          "name": "Livro removido",
+          "originalRequest": {
+            "method": "DELETE",
+            "url": { "raw": "{{base_url}}/books/1", "host": ["{{base_url}}"], "path": ["books", "1"] }
+          },
+          "status": "No Content",
+          "code": 204,
+          "header": [],
+          "body": ""
+        },
+        {
+          "name": "Livro não encontrado",
+          "originalRequest": {
+            "method": "DELETE",
+            "url": { "raw": "{{base_url}}/books/999", "host": ["{{base_url}}"], "path": ["books", "999"] }
+          },
+          "status": "Not Found",
+          "code": 404,
+          "_postman_previewlanguage": "json",
+          "header": [{ "key": "Content-Type", "value": "application/json" }],
+          "body": "{\n  \"error\": \"Livro não encontrado.\"\n}"
+        }
+      ],
+      "request": {
+        "method": "DELETE",
+        "url": {
+          "raw": "{{base_url}}/books/{{book_id}}",
+          "host": ["{{base_url}}"],
+          "path": ["books", "{{book_id}}"]
+        }
+      }
+    },
+    {
+      "name": "Erro: data inválida (400)",
+      "response": [
+        {
+          "name": "Data inválida",
+          "originalRequest": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Livro\",\n  \"author\": \"Autor\",\n  \"publication_date\": \"01/01/1899\",\n  \"summary\": \"Resumo\"\n}"
+            },
+            "url": { "raw": "{{base_url}}/books", "host": ["{{base_url}}"], "path": ["books"] }
+          },
+          "status": "Bad Request",
+          "code": 400,
+          "_postman_previewlanguage": "json",
+          "header": [{ "key": "Content-Type", "value": "application/json" }],
+          "body": "{\n  \"error\": \"A data de publicação deve usar o formato AAAA-MM-DD.\"\n}"
+        }
+      ],
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": ["pm.test('Status 400', () => pm.response.to.have.status(400));"]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"title\": \"Livro\",\n  \"author\": \"Autor\",\n  \"publication_date\": \"01/01/1899\",\n  \"summary\": \"Resumo\"\n}",
+          "options": { "raw": { "language": "json" } }
+        },
+        "url": { "raw": "{{base_url}}/books", "host": ["{{base_url}}"], "path": ["books"] }
+      }
+    },
+    {
+      "name": "Erro: body não JSON (415)",
+      "response": [
+        {
+          "name": "Content-Type inválido",
+          "originalRequest": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "text/plain" }],
+            "body": { "mode": "raw", "raw": "isto não é json" },
+            "url": { "raw": "{{base_url}}/books", "host": ["{{base_url}}"], "path": ["books"] }
+          },
+          "status": "Unsupported Media Type",
+          "code": 415,
+          "_postman_previewlanguage": "json",
+          "header": [{ "key": "Content-Type", "value": "application/json" }],
+          "body": "{\n  \"error\": \"O Content-Type deve ser application/json.\"\n}"
+        }
+      ],
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": ["pm.test('Status 415', () => pm.response.to.have.status(415));"]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "text/plain" }],
+        "body": { "mode": "raw", "raw": "isto não é json" },
+        "url": { "raw": "{{base_url}}/books", "host": ["{{base_url}}"], "path": ["books"] }
+      }
+    }
+  ]
+}
